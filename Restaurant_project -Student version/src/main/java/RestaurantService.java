@@ -5,13 +5,13 @@ import java.util.List;
 public class RestaurantService {
     private static List<Restaurant> restaurants = new ArrayList<>();
 
-    public Restaurant findRestaurantByName(String restaurantName){
+    public Restaurant findRestaurantByName(String restaurantName) throws restaurantNotFoundException {
         for(Restaurant restaurant : restaurants) {
             if(null != restaurantName && restaurantName.equalsIgnoreCase(restaurant.getName())) {
                 return restaurant;
             }
         }
-        return null;
+        throw new restaurantNotFoundException(restaurantName);
     }
 
 
@@ -31,5 +31,13 @@ public class RestaurantService {
 
     public List<Restaurant> getRestaurants() {
         return restaurants;
+    }
+
+    public int getTotalAmount(List<Item> items) {
+        int total = 0;
+        for(Item item : items) {
+            total = total + item.getPrice();
+        }
+        return total;
     }
 }
